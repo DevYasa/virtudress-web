@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header className="bg-[#13072e] text-white p-4">
+    <header className="bg-[#13072e] text-white pt-8">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <span className="text-2xl font-bold ml-2">Virtudress</span>
         </Link>
         <nav>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-6">
             <li><Link to="/" className="hover:text-purple-300">Home</Link></li>
             <li><Link to="/pricing" className="hover:text-purple-300">Pricing</Link></li>
             <li><Link to="/about" className="hover:text-purple-300">About</Link></li>
