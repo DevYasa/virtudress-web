@@ -8,7 +8,7 @@ module.exports = {
         sans: ['Poppins', 'sans-serif'],
       },
       colors: {
-        'virtudress-purple': '#2f0c57',
+        'virtudress-purple': '#13072e',
         'virtudress-dark': '#18012b',
       },
     },
