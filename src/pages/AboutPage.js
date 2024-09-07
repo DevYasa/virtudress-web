@@ -1,56 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AboutPage = () => {
   return (
-    <div className="bg-[#13072e] min-h-screen text-white">
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
-        <div className="flex flex-wrap -mx-4">
-          <div className="w-full md:w-1/2 px-4 mb-8">
-            <form className="bg-gradient-to-br from-[#13072e] to-[#3f2182] rounded-lg p-6">
-              <div className="mb-4">
-                <label htmlFor="name" className="block mb-2">Name</label>
-                <input type="text" id="name" className="w-full bg-white rounded p-2" />
-              </div>
-              <div className="flex mb-4">
-                <div className="w-1/2 mr-2">
-                  <label htmlFor="email" className="block mb-2">Email</label>
-                  <input type="email" id="email" className="w-full bg-white rounded p-2" />
-                </div>
-                <div className="w-1/2 ml-2">
-                  <label htmlFor="phone" className="block mb-2">Phone Number</label>
-                  <input type="tel" id="phone" className="w-full bg-white rounded p-2" />
-                </div>
-              </div>
-              <div className="mb-4">
-                <label htmlFor="message" className="block mb-2">Message</label>
-                <textarea id="message" rows="4" className="w-full bg-white rounded p-2"></textarea>
-              </div>
-              <button type="submit" className="bg-white text-[#13072e] font-bold py-2 px-4 rounded">
-                Submit
-              </button>
-            </form>
-          </div>
-          <div className="w-full md:w-1/2 px-4">
-            <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-            <p className="mb-4">For questions, technical assistance, or collaboration opportunities via the contact information provided.</p>
-            <div className="mb-4">
-              <div className="flex items-center mb-2">
-                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                <span>+123-456-7890</span>
-              </div>
-              <div className="flex items-center mb-2">
-                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                <span>virtudress@gmail.com</span>
-              </div>
-              <div className="flex items-center">
-                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                <span>123, main street, matara.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-[#13072e]">
+     <main className="container mx-auto mt-8 p-4 bg-[#13072e] text-white">
+       <h1 className="text-4xl font-bold text-center text-white mb-8">About Virtudress</h1>
+      
+       <section className="bg-[#1f0f47] rounded-lg shadow-md p-6 mb-8">
+         <h2 className="text-2xl font-semibold text-white mb-4">Our Story</h2>
+         <p className="text-gray-300 mb-4">
+           Virtudress was born from a simple idea: make online shopping as intuitive and enjoyable as trying on clothes in a physical store. Founded in 2020, our team of fashion enthusiasts and tech innovators came together to revolutionize the e-commerce experience.
+         </p>
+         <p className="text-gray-300">
+           We believe that technology should enhance the joy of fashion, not complicate it. That's why we've created a virtual dressing room that's not just accurate, but fun to use.
+         </p>
+       </section>
+
+       <section className="bg-[#1f0f47] rounded-lg shadow-md p-6 mb-8">
+         <h2 className="text-2xl font-semibold text-white mb-4">Our Mission</h2>
+         <p className="text-gray-300">
+           At Virtudress, our mission is to empower shoppers with the confidence to make informed fashion choices online. We strive to reduce returns, increase satisfaction, and make online shopping more sustainable by helping customers find the perfect fit, every time.
+         </p>
+       </section>
+
+       <section className="bg-[#1f0f47] rounded-lg shadow-md p-6 mb-8">
+         <h2 className="text-2xl font-semibold text-white mb-4">The Virtudress Difference</h2>
+         <ul className="list-disc list-inside text-gray-300">
+           <li>Cutting-edge AI and AR technology for accurate virtual try-ons</li>
+           <li>Personalized recommendations based on your body type and style preferences</li>
+           <li>Seamless integration with top fashion retailers</li>
+           <li>Commitment to user privacy and data security</li>
+           <li>Continuous innovation to improve your shopping experience</li>
+         </ul>
+       </section>
+
+       <section className="bg-[#1f0f47] rounded-lg shadow-md p-6">
+         <h2 className="text-2xl font-semibold text-white mb-4">Join the Virtudress Community</h2>
+         <p className="text-gray-300 mb-4">
+           We're more than just a technology company – we're building a community of fashion-forward individuals who believe in the power of innovation to transform the way we shop.
+         </p>
+         <Link to="/contact" className="inline-block bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-300">Get in Touch</Link>
+       </section>
+     </main>
     </div>
   );
 };

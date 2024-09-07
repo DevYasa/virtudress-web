@@ -27,7 +27,7 @@ const HomePage = () => {
       </div>
 
       {/* Why Choose Virtudress section */}
-      <section className="container mx-auto px-4 mb-16">
+      <section className="container mx-auto px-4 mb-24">
         <h2 className="text-4xl font-bold mb-8 text-center">Why Choose Virtudress?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-gradient-to-br from-[#13072e] to-[#3f2182] p-8 rounded-2xl">
@@ -49,7 +49,7 @@ const HomePage = () => {
       </section>
 
       {/* How It Works section */}
-      <section className="container mx-auto px-4 mb-16">
+      <section className="container mx-auto px-4 mb-20">
         <h2 className="text-4xl font-bold mb-8 text-center">How It Works?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-gradient-to-br from-[#13072e] to-[#3f2182] p-8 rounded-2xl">
