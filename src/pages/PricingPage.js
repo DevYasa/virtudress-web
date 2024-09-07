@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PricingCard = ({ title, price, monthlyPrice, features, buttonText, isBestDeal }) => (
-  <div className={`bg-gradient-to-br from-[#13072e] to-[#3f2182] rounded-lg p-20 flex flex-col ${isBestDeal ? 'border-2 border-purple-400' : ''}`}>
+  <div className={`bg-gradient-to-br from-[#13072e] to-[#3f2182] rounded-lg p-24 flex flex-col ${isBestDeal ? 'border-2 border-purple-400' : ''}`}>
     {isBestDeal && (
       <span className="bg-purple-400 text-purple-900 text-xs font-semibold px-3 py-1 rounded-full mb-4 self-end">
         #bestdeal

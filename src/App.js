@@ -9,9 +9,8 @@ import Header from './components/Header';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
 import PricingPage from './pages/PricingPage';
-import SignupPage from './pages/SignupPage';
+import AuthForm from './pages/AuthForm';
 
 const App = () => {
   return (
@@ -24,8 +23,7 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/auth" element={<AuthForm />} />
           </Routes>
         </main>
         <Footer />

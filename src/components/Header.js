@@ -16,7 +16,7 @@ const Header = () => {
             <li><Link to="/contact" className="hover:text-purple-300">Contact</Link></li>
           </ul>
         </nav>
-        <Link to="/login" className="bg-white text-[#13072e] px-4 py-2 rounded-full hover:bg-purple-100">
+        <Link to="/auth" className="bg-purple-600 text-white hover:bg-purple-700 transition duration-300 px-4 py-2 rounded-full">
           Login →
         </Link>
       </div>
