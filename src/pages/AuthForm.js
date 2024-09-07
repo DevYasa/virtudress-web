@@ -10,8 +10,8 @@ const AuthForm = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#13072e]">
-      <div className="bg-gradient-to-br from-[#13072e] to-[#3f2182] p-28 rounded-lg shadow-md w-fit">
-        <h2 className="text-2xl font-bold mb-6 text-center text-white">
+      <div className="bg-gradient-to-br from-[#13072e] to-[#3f2182] p-28 rounded-lg shadow-md w-fit ring-2 ring-purple-400">
+        <h2 className="text-2xl font-bold mb-6 text-center text-white ">
           {isLogin ? 'Login to Virtudress' : 'Sign up for Virtudress'}
         </h2>
         <form className="space-y-6">

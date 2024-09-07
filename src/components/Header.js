@@ -6,7 +6,11 @@ const Header = () => {
     <header className="bg-[#13072e] text-white pt-8">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <span className="text-2xl font-bold ml-2">Virtudress</span>
+          <img 
+            src="/images/virtudress-logo.png" 
+            alt="Virtudress Logo" 
+            className="h-10 w-auto" // Adjust the height as needed
+          />
         </Link>
         <nav>
           <ul className="flex space-x-6">
@@ -20,6 +24,7 @@ const Header = () => {
           Login →
         </Link>
       </div>
+      <div className="mt-4 border-t border-white mr-16 ml-16"></div>
     </header>
   );
 };
