@@ -17,26 +17,42 @@ export const AuthProvider = ({ children }) => {
       setUser(data);
     } catch (error) {
       console.error('Not authenticated', error);
+      setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password });
-    setUser(data.user);
-    return data;
+    try {
+      const { data } = await api.post('/auth/login', { email, password });
+      setUser(data.user);
+      return data;
+    } catch (error) {
+      console.error('Login failed', error);
+      throw error;
+    }
   };
 
   const signup = async (name, email, password) => {
-    const { data } = await api.post('/auth/signup', { name, email, password });
-    setUser(data.user);
-    return data;
+    try {
+      const { data } = await api.post('/auth/signup', { name, email, password });
+      setUser(data.user);
+      return data;
+    } catch (error) {
+      console.error('Signup failed', error);
+      throw error;
+    }
   };
 
   const logout = async () => {
-    await api.post('/auth/logout');
-    setUser(null);
+    try {
+      await api.post('/auth/logout');
+      setUser(null);
+    } catch (error) {
+      console.error('Logout failed', error);
+      throw error;
+    }
   };
 
   return (

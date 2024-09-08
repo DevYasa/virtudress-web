@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-const PricingCard = ({ title, price, monthlyPrice, features, buttonText, isBestDeal }) => (
+const PricingCard = ({ title, price, monthlyPrice, features, buttonText, isBestDeal, onPurchase }) => (
   <div className={`bg-[#2a1659] rounded-3xl p-20 flex flex-col ${isBestDeal ? 'ring-2 ring-purple-400' : ''} relative`}>
     {isBestDeal && (
       <span className="bg-[#b0a1ff] text-[#13072e] text-sm font-semibold px-4 py-1 rounded-full absolute top-4 right-4">
@@ -24,7 +26,10 @@ const PricingCard = ({ title, price, monthlyPrice, features, buttonText, isBestD
         </li>
       ))}
     </ul>
-    <button className="bg-white text-[#13072e] font-bold py-3 px-6 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300">
+    <button 
+      onClick={onPurchase}
+      className="bg-white text-[#13072e] font-bold py-3 px-6 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300"
+    >
       {buttonText}
       <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
@@ -34,6 +39,9 @@ const PricingCard = ({ title, price, monthlyPrice, features, buttonText, isBestD
 );
 
 const PricingPage = () => {
+  const { user } = useAuth();  // Use the useAuth hook instead of useContext
+  const navigate = useNavigate();
+
   const pricingPlans = [
     {
       title: 'Starter',
@@ -74,12 +82,26 @@ const PricingPage = () => {
     },
   ];
 
+  const handlePurchase = (plan) => {
+    if (!user) {
+      // If user is not logged in, redirect to login page
+      navigate('/auth', { state: { from: '/pricing' } });
+    } else {
+      // User is logged in, proceed with purchase
+      navigate('/purchase', { state: { plan } });
+    }
+  };
+
   return (
     <div className="bg-[#13072e] min-h-screen text-white pt-32">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pricingPlans.map((plan, index) => (
-            <PricingCard key={index} {...plan} />
+            <PricingCard 
+              key={index} 
+              {...plan} 
+              onPurchase={() => handlePurchase(plan)}
+            />
           ))}
         </div>
       </div>

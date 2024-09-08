@@ -14,6 +14,7 @@ import HomePage from './pages/HomePage';
 import PricingPage from './pages/PricingPage';
 import AuthForm from './pages/AuthForm';
 import DashboardPage from './pages/DashboardPage';
+import PurchasePage from './pages/PurchasePage';
 
 const App = () => {
   return (
@@ -29,9 +30,10 @@ const App = () => {
              <Route path="/contact" element={<ContactPage />} />
              <Route path="/auth" element={<AuthForm />} />
              <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            {/* Add other protected routes here */}
-            </Route>
+               <Route path="/dashboard" element={<DashboardPage />} />
+               <Route path="/purchase" element={<PurchasePage />} />
+               {/* Add other protected routes here */}
+             </Route>
            </Routes>
           </main>
          <Footer />
