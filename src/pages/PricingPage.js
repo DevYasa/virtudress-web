@@ -45,8 +45,8 @@ const PricingPage = () => {
   const pricingPlans = [
     {
       title: 'Starter',
-      price: '200',
-      monthlyPrice: '39',
+      price: '1',
+      monthlyPrice: '1',
       features: [
         'Up to 20 products',
         'Basic analytics',
@@ -57,8 +57,8 @@ const PricingPage = () => {
     },
     {
       title: 'Pro',
-      price: '400',
-      monthlyPrice: '39',
+      price: '5',
+      monthlyPrice: '5',
       features: [
         'Up to 50 products',
         'Advanced analytics',
@@ -70,8 +70,8 @@ const PricingPage = () => {
     },
     {
       title: 'Enterprise',
-      price: '900',
-      monthlyPrice: '45',
+      price: '10',
+      monthlyPrice: '10',
       features: [
         'up to 100 products',
         'Advanced analytics',
@@ -83,11 +83,12 @@ const PricingPage = () => {
   ];
 
   const handlePurchase = (plan) => {
+    console.log('Handling purchase for plan:', plan);
     if (!user) {
-      // If user is not logged in, redirect to login page
+      console.log('User not logged in, redirecting to auth page');
       navigate('/auth', { state: { from: '/pricing' } });
     } else {
-      // User is logged in, proceed with purchase
+      console.log('User logged in, navigating to purchase page');
       navigate('/purchase', { state: { plan } });
     }
   };

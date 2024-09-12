@@ -1,33 +1,62 @@
-import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, User, Globe } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../utils/api';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', website: '' });
+  const [errors, setErrors] = useState({});
+  const location = useLocation();
+  const { login, signup } = useAuth();
 
-  const toggleForm = () => setIsLogin(!isLogin);
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+    setErrors({});
+  };
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: '' });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!isLogin) {
+      if (!formData.name.trim()) newErrors.name = 'Fashion Store Name is required';
+      if (!formData.website.trim()) newErrors.website = 'Website URL is required';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    if (!validateForm()) return;
+    
     try {
-      const endpoint = isLogin ? '/auth/login' : '/auth/signup';
-      const { data } = await api.post(endpoint, formData);
-      console.log(data.message);
-      // Redirect to home page or dashboard
-      navigate('/');
+      if (isLogin) {
+        await login(formData.email, formData.password);
+      } else {
+        await signup(formData.name, formData.email, formData.password, formData.website);
+      }
+      
+      const from = location.state?.from?.pathname || "/";
+      window.location.href = from;
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred');
+      setErrors({ form: err.response?.data?.message || 'An error occurred' });
     }
   };
 
@@ -37,20 +66,35 @@ const AuthForm = () => {
         <h2 className="text-2xl font-bold mb-6 text-center text-white">
           {isLogin ? 'Login to Virtudress' : 'Sign up for Virtudress'}
         </h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {errors.form && <p className="text-red-500 mb-4">{errors.form}</p>}
         <form className="space-y-6" onSubmit={handleSubmit}>
           {!isLogin && (
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name"
-                className="w-full pl-10 pr-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Fashion Store Name"
+                  className="w-full pl-10 pr-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  onChange={handleChange}
+                  required
+                />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              </div>
+              <div className="relative">
+                <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="url"
+                  name="website"
+                  placeholder="Website URL"
+                  className="w-full pl-10 pr-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  onChange={handleChange}
+                  required
+                />
+                {errors.website && <p className="text-red-500 text-sm mt-1">{errors.website}</p>}
+              </div>
+            </>
           )}
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
@@ -62,6 +106,7 @@ const AuthForm = () => {
               onChange={handleChange}
               required
             />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
@@ -80,6 +125,7 @@ const AuthForm = () => {
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
           <button
             type="submit"

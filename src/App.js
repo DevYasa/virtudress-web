@@ -15,30 +15,31 @@ import PricingPage from './pages/PricingPage';
 import AuthForm from './pages/AuthForm';
 import DashboardPage from './pages/DashboardPage';
 import PurchasePage from './pages/PurchasePage';
+import ConfirmationPage from './pages/ConfirmationPage';
 
 const App = () => {
   return (
     <AuthProvider>
-     <Router>
-       <div className="flex flex-col min-h-screen">
-         <Header />
-         <main className="flex-grow">
-           <Routes>
-             <Route path="/" element={<HomePage />} />
-             <Route path="/pricing" element={<PricingPage />} />
-             <Route path="/about" element={<AboutPage />} />
-             <Route path="/contact" element={<ContactPage />} />
-             <Route path="/auth" element={<AuthForm />} />
-             <Route element={<ProtectedRoute />}>
-               <Route path="/dashboard" element={<DashboardPage />} />
-               <Route path="/purchase" element={<PurchasePage />} />
-               {/* Add other protected routes here */}
-             </Route>
-           </Routes>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/auth" element={<AuthForm />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/purchase" element={<PurchasePage />} />
+              <Route path="/confirmation" element={<ConfirmationPage />} />
+            </Route>
+          </Routes>
           </main>
-         <Footer />
-       </div>
-     </Router>
+        <Footer />
+          </div>
+    </Router>
     </AuthProvider>
   );
 };

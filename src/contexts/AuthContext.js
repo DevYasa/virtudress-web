@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const checkUserLoggedIn = async () => {
     try {
       const { data } = await api.get('/auth/me');
+      console.log('User data received:', data);
       setUser(data);
     } catch (error) {
       console.error('Not authenticated', error);
@@ -34,9 +35,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (name, email, password) => {
+  const signup = async (name, email, password, website) => {
     try {
-      const { data } = await api.post('/auth/signup', { name, email, password });
+      const { data } = await api.post('/auth/signup', { name, email, password, website });
       setUser(data.user);
       return data;
     } catch (error) {
