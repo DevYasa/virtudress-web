@@ -16,6 +16,7 @@ import AuthForm from './pages/AuthForm';
 import DashboardPage from './pages/DashboardPage';
 import PurchasePage from './pages/PurchasePage';
 import ConfirmationPage from './pages/ConfirmationPage';
+import TryOnPage from './pages/TryOnPage';
 
 const App = () => {
   return (
@@ -30,15 +31,16 @@ const App = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/auth" element={<AuthForm />} />
+            <Route path="/try-on/:store/:productId" element={<TryOnPage />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/purchase" element={<PurchasePage />} />
               <Route path="/confirmation" element={<ConfirmationPage />} />
             </Route>
           </Routes>
-          </main>
+        </main>
         <Footer />
-          </div>
+      </div>
     </Router>
     </AuthProvider>
   );

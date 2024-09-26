@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
-import { Upload, Camera } from 'lucide-react';
+import { Upload, Camera, BarChart2 } from 'lucide-react';
 
 const DashboardPage = () => {
   const { user } = useAuth();
@@ -10,9 +10,8 @@ const DashboardPage = () => {
   const [currentProduct, setCurrentProduct] = useState({
     name: '',
     description: '',
-    size: '',
     color: '',
-    fabric: '',
+    fabricType: '',
     images: []
   });
 
@@ -60,7 +59,7 @@ const DashboardPage = () => {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
-      setCurrentProduct({ name: '', description: '', size: '', color: '', fabric: '', images: [] });
+      setCurrentProduct({ name: '', description: '', color: '', fabricType: '', images: [] });
       fetchData(); // Refresh products and stats
     } catch (error) {
       console.error('Error adding product:', error);
@@ -122,19 +121,6 @@ const DashboardPage = () => {
               required
               className="w-full p-2 bg-[#3d2373] border-[#3d2373] text-white rounded"
             />
-            <select
-              name="size"
-              value={currentProduct.size}
-              onChange={handleInputChange}
-              className="w-full p-2 bg-[#3d2373] border-[#3d2373] text-white rounded"
-            >
-              <option value="">Select Size</option>
-              <option value="XS">XS</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-            </select>
             <input
               type="text"
               name="color"
@@ -146,8 +132,8 @@ const DashboardPage = () => {
             />
             <input
               type="text"
-              name="fabric"
-              value={currentProduct.fabric}
+              name="fabricType"
+              value={currentProduct.fabricType}
               onChange={handleInputChange}
               placeholder="Fabric Type"
               required
@@ -176,37 +162,52 @@ const DashboardPage = () => {
           </form>
         </div>
 
-        {/* Stats section */}
+        {/* Overall Stats section */}
         {stats && (
-          <div className="bg-[#1f0f47] rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-semibold mb-4">Your Stats</h2>
+          <div className="bg-[#1f0f47] rounded-lg shadow-md p-6 mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Overall Stats</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-[#3d2373] p-4 rounded-lg">
-                <h3 className="text-xl mb-2">Products</h3>
+                <h3 className="text-xl mb-2">Total Products</h3>
                 <p className="text-3xl font-bold">{stats.totalProducts}</p>
               </div>
               <div className="bg-[#3d2373] p-4 rounded-lg">
-                <h3 className="text-xl mb-2">Try-ons</h3>
+                <h3 className="text-xl mb-2">Total Try-ons</h3>
                 <p className="text-3xl font-bold">{stats.totalTryOns}</p>
               </div>
               <div className="bg-[#3d2373] p-4 rounded-lg">
-                <h3 className="text-xl mb-2">Conversions</h3>
-                <p className="text-3xl font-bold">{stats.conversionRate}%</p>
+                <h3 className="text-xl mb-2">Overall Conversion Rate</h3>
+                <p className="text-3xl font-bold">{stats.overallConversionRate}%</p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Uploaded products list */}
+        {/* Uploaded products list with individual stats */}
         {products.length > 0 && (
           <div className="bg-[#1f0f47] rounded-lg shadow-md p-6 mt-8">
             <h2 className="text-2xl font-semibold mb-4">Uploaded Products</h2>
             {products.map((product, index) => (
               <div key={product._id || index} className="bg-[#3d2373] p-4 rounded-lg mb-4">
-                <h3 className="font-bold">{product.name}</h3>
-                <p>{product.description}</p>
-                <p>Size: {product.size}, Color: {product.color}, Fabric: {product.fabric}</p>
-                <p>{product.images.length} image(s) uploaded</p>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-xl">{product.name}</h3>
+                    <p className="text-sm text-gray-300">Product ID: {product.productId}</p>
+                    <p className="mt-2">{product.description}</p>
+                    <p className="mt-1">Color: {product.color}, Fabric: {product.fabricType}</p>
+                    <p className="mt-1">{product.images.length} image(s) uploaded</p>
+                    <p className="mt-1">3D Model: {product.modelUrl ? 'Available' : 'Not available'}</p>
+                    <p className="mt-1">Product Link: {product.productLink ? product.productLink : 'Not available'}</p>
+                  </div>
+                  <div className="bg-[#2a1960] p-3 rounded-lg">
+                    <h4 className="font-semibold mb-2 flex items-center">
+                      <BarChart2 className="h-4 w-4 mr-1" /> Product Stats
+                    </h4>
+                    <p>Try-ons: {product.tryOns || 0}</p>
+                    <p>Conversions: {product.conversions || 0}</p>
+                    <p>Conversion Rate: {product.conversionRate || 0}%</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
