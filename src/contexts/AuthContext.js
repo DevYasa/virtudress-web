@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const { data } = await api.post('/auth/login', { email, password });
+      console.log('Login response:', data);
       setUser(data.user);
       return data;
     } catch (error) {
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (name, email, password, website) => {
     try {
       const { data } = await api.post('/auth/signup', { name, email, password, website });
+      console.log('Signup response:', data);
       setUser(data.user);
       return data;
     } catch (error) {
@@ -56,8 +58,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isAdmin = user?.isAdmin || false;
+
+  const contextValue = {
+    user,
+    loading,
+    login,
+    signup,
+    logout,
+    isAdmin,
+    checkUserLoggedIn  // Add this function to the context
+  };
+
+  console.log('AuthContext state:', { user, loading, isAdmin });
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

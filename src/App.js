@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -16,32 +16,38 @@ import AuthForm from './pages/AuthForm';
 import DashboardPage from './pages/DashboardPage';
 import PurchasePage from './pages/PurchasePage';
 import ConfirmationPage from './pages/ConfirmationPage';
-import TryOnPage from './pages/TryOnPage';
+import AdminDashboard from './components/AdminDashboard';
 
 const App = () => {
   return (
     <AuthProvider>
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/auth" element={<AuthForm />} />
-            <Route path="/try-on/:store/:productId" element={<TryOnPage />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/purchase" element={<PurchasePage />} />
-              <Route path="/confirmation" element={<ConfirmationPage />} />
-            </Route>
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/auth" element={<AuthForm />} />
+              
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/purchase" element={<PurchasePage />} />
+                <Route path="/confirmation" element={<ConfirmationPage />} />
+              </Route>
+
+              <Route path="/admin" element={<ProtectedRoute adminOnly={true} />}>
+                <Route index element={<AdminDashboard />} />
+              </Route>
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
     </AuthProvider>
   );
 };

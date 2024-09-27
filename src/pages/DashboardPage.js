@@ -41,8 +41,11 @@ const DashboardPage = () => {
     setCurrentProduct({ ...currentProduct, images: files });
   };
 
+  const [error, setError] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     try {
       const formData = new FormData();
       Object.keys(currentProduct).forEach(key => {
@@ -55,14 +58,34 @@ const DashboardPage = () => {
         }
       });
 
-      await api.post('/user/product', formData, {
+      console.log('Sending product data:', Object.fromEntries(formData));
+
+      const response = await api.post('/user/product', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
+
+      console.log('Product added successfully:', response.data);
 
       setCurrentProduct({ name: '', description: '', color: '', fabricType: '', images: [] });
       fetchData(); // Refresh products and stats
     } catch (error) {
       console.error('Error adding product:', error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+        setError(error.response.data.message || 'An error occurred while adding the product');
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error request:', error.request);
+        setError('No response received from the server');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error message:', error.message);
+        setError('An error occurred while sending the request');
+      }
     }
   };
 
@@ -95,6 +118,11 @@ const DashboardPage = () => {
         {/* Product upload section */}
         <div className="bg-[#1f0f47] rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-2xl font-semibold mb-4">Upload New Product</h2>
+          {error && (
+          <div className="bg-red-500 text-white p-3 rounded mb-4">
+            {error}
+          </div>
+        )}
           <div className="mb-6 bg-[#3d2373] border-[#3d2373] p-4 rounded-lg">
             <Camera className="h-4 w-4 mb-2" />
             <h3 className="text-lg font-semibold">Upload Product Details</h3>

@@ -14,10 +14,14 @@ module.exports = {
       });
       
       // Ignore source-map-loader for @mediapipe packages
-      webpackConfig.module.rules.forEach(rule => {
-        if (rule.use && rule.use.some(use => use.loader === 'source-map-loader')) {
-          rule.exclude = /node_modules\/@mediapipe/;
-        }
+      webpackConfig.module.rules.push({
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+        exclude: [
+          /node_modules\/@mediapipe/,
+          /node_modules\/(?!@mediapipe).+/,
+        ],
       });
 
       return webpackConfig;

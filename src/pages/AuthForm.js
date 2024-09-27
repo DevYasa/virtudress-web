@@ -1,6 +1,6 @@
 import { Eye, EyeOff, Lock, Mail, User, Globe } from 'lucide-react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const AuthForm = () => {
@@ -42,19 +42,26 @@ const AuthForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     
     try {
+      let userData;
       if (isLogin) {
-        await login(formData.email, formData.password);
+        userData = await login(formData.email, formData.password);
       } else {
-        await signup(formData.name, formData.email, formData.password, formData.website);
+        userData = await signup(formData.name, formData.email, formData.password, formData.website);
       }
       
-      const from = location.state?.from?.pathname || "/";
-      window.location.href = from;
+      if (userData.user.isAdmin) {
+        navigate('/admin');
+      } else {
+        const from = location.state?.from?.pathname || "/dashboard";
+        navigate(from);
+      }
     } catch (err) {
       setErrors({ form: err.response?.data?.message || 'An error occurred' });
     }
