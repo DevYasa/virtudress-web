@@ -11,7 +11,12 @@ module.exports = {
         'virtudress-purple': '#13072e',
         'virtudress-dark': '#18012b',
       },
+      aspectRatio: {
+        '9/16': '9 / 16',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

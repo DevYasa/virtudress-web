@@ -11,44 +11,47 @@ import Header from './components/Header';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
-import PricingPage from './pages/PricingPage';
 import AuthForm from './pages/AuthForm';
 import DashboardPage from './pages/DashboardPage';
-import PurchasePage from './pages/PurchasePage';
-import ConfirmationPage from './pages/ConfirmationPage';
 import AdminDashboard from './components/AdminDashboard';
+import TryOnPage from './pages/TryOnPage';
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/auth" element={<AuthForm />} />
-              
-              <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/purchase" element={<PurchasePage />} />
-                <Route path="/confirmation" element={<ConfirmationPage />} />
-              </Route>
-
-              <Route path="/admin" element={<ProtectedRoute adminOnly={true} />}>
-                <Route index element={<AdminDashboard />} />
-              </Route>
-
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        {/* Public route outside of AuthProvider */}
+        <Route path="/try-on/:productId" element={<TryOnPage />} />
+        
+        {/* All other routes wrapped in AuthProvider */}
+        <Route
+          path="*"
+          element={
+            <AuthProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/auth" element={<AuthForm />} />
+                    <Route element={<ProtectedRoute />}>
+                      <Route path="/dashboard" element={<DashboardPage />} />
+                    </Route>
+                    <Route path="/admin" element={<ProtectedRoute adminOnly={true} />}>
+                      <Route index element={<AdminDashboard />} />
+                    </Route>
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
+            </AuthProvider>
+          }
+        />
+      </Routes>
+    </Router>
   );
 };
 

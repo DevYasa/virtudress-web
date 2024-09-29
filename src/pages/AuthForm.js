@@ -1,6 +1,6 @@
 import { Eye, EyeOff, Lock, Mail, User, Globe } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const AuthForm = () => {
@@ -8,7 +8,7 @@ const AuthForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', website: '' });
   const [errors, setErrors] = useState({});
-  const location = useLocation();
+  const navigate = useNavigate();
   const { login, signup } = useAuth();
 
   const toggleForm = () => {
@@ -42,28 +42,26 @@ const AuthForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     
     try {
-      let userData;
+      let user;
       if (isLogin) {
-        userData = await login(formData.email, formData.password);
+        user = await login(formData.email, formData.password);
       } else {
-        userData = await signup(formData.name, formData.email, formData.password, formData.website);
+        user = await signup(formData.name, formData.email, formData.password, formData.website);
       }
       
-      if (userData.user.isAdmin) {
+      if (user.isAdmin) {
         navigate('/admin');
       } else {
-        const from = location.state?.from?.pathname || "/dashboard";
-        navigate(from);
+        navigate('/dashboard');
       }
     } catch (err) {
-      setErrors({ form: err.response?.data?.message || 'An error occurred' });
+      console.error('Auth error:', err);
+      setErrors({ form: err.response?.data?.message || 'An error occurred during authentication' });
     }
   };
 

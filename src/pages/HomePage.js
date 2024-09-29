@@ -13,7 +13,7 @@ const HomePage = () => {
               <p className="text-xl md:text-4xl mb-8">
                 Boost sales and reduce returns<br />with our cutting-edge virtual<br />try-on technology
               </p>
-              <Link to="/pricing" className="bg-white text-[#13072e] px-6 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 inline-block">
+              <Link to="/contact" className="bg-white text-[#13072e] px-6 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 inline-block">
                 Get Our Service →
               </Link>
             </div>
@@ -75,7 +75,7 @@ const HomePage = () => {
         <img src="/images/img-store.png" alt="Transform Your Online Store" className="w-64 h-auto mx-auto mb-8" />
         <h2 className="text-4xl font-bold mb-4">Ready To Transform Your Online Store?</h2>
         <p className="text-xl mb-8">Join Hundreds of satisfied fashion retailers using Virtudress!</p>
-        <Link to="/pricing" className="bg-white text-[#13072e] px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 inline-block">
+        <Link to="/contact" className="bg-white text-[#13072e] px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 inline-block">
           Get Started Now →
         </Link>
       </section>

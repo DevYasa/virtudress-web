@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       const { data } = await api.post('/auth/login', { email, password });
       console.log('Login response:', data);
       setUser(data.user);
-      return data;
+      return data.user;
     } catch (error) {
       console.error('Login failed', error);
       throw error;
@@ -40,8 +40,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await api.post('/auth/signup', { name, email, password, website });
       console.log('Signup response:', data);
-      setUser(data.user);
-      return data;
+      // After successful signup, log the user in
+      return login(email, password);
     } catch (error) {
       console.error('Signup failed', error);
       throw error;
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     signup,
     logout,
     isAdmin,
-    checkUserLoggedIn  // Add this function to the context
+    checkUserLoggedIn
   };
 
   console.log('AuthContext state:', { user, loading, isAdmin });
